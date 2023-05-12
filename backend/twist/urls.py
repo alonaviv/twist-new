@@ -20,6 +20,6 @@ from .views import serve_react
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'', serve_react),
     path('open_mic/', include('open_mic.urls')),
+    re_path(r'', serve_react),
 ]

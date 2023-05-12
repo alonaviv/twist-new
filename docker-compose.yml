@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=twist_db
+      - POSTGRES_USER=twistdbadmin
+      - POSTGRES_PASSWORD=76697421
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  twist:
+    build: .
+    command: gunicorn twist.wsgi:application -b 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    working_dir: /twist/backend
+  migrate:
+    build: .
+    command: python manage.py migrate
+    volumes:
+      - .:/code
+    working_dir: /twist/backend
+    depends_on:
+      - db
