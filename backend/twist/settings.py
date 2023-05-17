@@ -41,12 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'open_mic.apps.OpenMicConfig',
-    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'twist_db',
         'USER': 'twistdbadmin',
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '76697421'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'HOST': 'db',
         'PORT': '5432',
     }
@@ -123,11 +121,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BACKEND_DIR / 'static'
-STATICFILES_DIRS = [FRONTEND_DIR / 'build' / 'static']
-
-# Using whitenoise to optimize/cache the way that the static files are served.
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-WHITENOISE_ROOT = FRONTEND_DIR / 'build' / 'root'
+STATICFILES_DIRS = [FRONTEND_DIR / 'build']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

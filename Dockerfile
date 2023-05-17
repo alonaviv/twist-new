@@ -29,6 +29,11 @@ WORKDIR /twist/backend/
 
 RUN python manage.py makemigrations
 
-EXPOSE 8000
+RUN rm -rf /twist/backend/static/*
+RUN python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "twist.wsgi:application", "-b", "0.0.0.0:8000"]
+# Flatten React's static directory structure
+RUN mv /twist/backend/static/static/* /twist/backend/static \
+    && rmdir /twist/backend/static/static
+
+EXPOSE 8000

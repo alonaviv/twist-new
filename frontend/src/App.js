@@ -7,7 +7,7 @@ function App() {
     const [currentDate, setCurrentDate] = useState(0);
     const [currentObj, setCurrentObj] = useState(0);
     useEffect(() => {
-        fetch('open_mic/current_time').then(res => res.json()).then(data => {
+        fetch('api/open_mic/current_time').then(res => res.json()).then(data => {
             setCurrentTime(data.time);
             setCurrentDate(data.date);
             setCurrentObj(data.obj)
@@ -24,3 +24,4 @@ function App() {
 }
 
 export default App;
+console.log("I would like to see this ")

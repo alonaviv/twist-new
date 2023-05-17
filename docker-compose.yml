@@ -1,24 +1,43 @@
 version: '3'
 
+volumes:
+  gunicorn_sock_vol: {}
+  static_vol: {}
+
 services:
   db:
     image: postgres
     environment:
       - POSTGRES_DB=twist_db
       - POSTGRES_USER=twistdbadmin
-      - POSTGRES_PASSWORD=76697421
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - ./data/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
   twist:
     build: .
-    command: gunicorn twist.wsgi:application -b 0.0.0.0:8000
+    command: gunicorn twist.wsgi:application --bind unix:/tmp/gunicorn.sock
     ports:
       - "8000:8000"
     depends_on:
       - db
     working_dir: /twist/backend
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - static_vol:/twist/backend/static
+      - gunicorn_sock_vol:/tmp
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - static_vol:/usr/src/app/static
+      - gunicorn_sock_vol:/tmp
+    ports:
+      - "80:80"
+    depends_on:
+      - twist
   migrate:
     build: .
     command: python manage.py migrate
@@ -27,3 +46,5 @@ services:
     working_dir: /twist/backend
     depends_on:
       - db
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
