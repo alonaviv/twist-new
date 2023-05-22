@@ -6,6 +6,7 @@ volumes:
 services:
   db:
     image: postgres
+    restart: always
     environment:
       - POSTGRES_DB=twist_db
       - POSTGRES_USER=twistdbadmin
@@ -16,6 +17,7 @@ services:
       - "5432:5432"
 
   twist:
+    restart: always
     build:
       context: ./backend
     command: /twist/backend/startup.sh
@@ -28,6 +30,7 @@ services:
       - gunicorn_sock_vol:/tmp
 
   nginx:
+    restart: always
     build:
         context: .
         dockerfile: nginx/Dockerfile
