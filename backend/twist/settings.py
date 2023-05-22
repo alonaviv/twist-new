@@ -27,8 +27,7 @@ FRONTEND_DIR = BASE_DIR.parent / 'frontend'
 
 import os
 
-DEBUG = os.environ.get('DJANGO_ENV') == 'development'
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEV', 'False') == 'True'
 ALLOWED_HOSTS = ['192.168.1.111', 'localhost', '127.0.0.1', '77.124.168.72']
 
 # Application definition

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
@@ -15,7 +14,7 @@ function App() {
     }, []);
     return (
         <div className="App">
-            <header className="App-header">
+            <header className="App-header" >
                 <p>The date is {currentDate} and the time is {currentTime}. Obj: {currentObj}</p> <br />
 
             </header>
@@ -24,4 +23,3 @@ function App() {
 }
 
 export default App;
-console.log("I would like to see this ")
