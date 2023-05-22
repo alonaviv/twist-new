@@ -1,20 +1,23 @@
+# Building the react build dir, and then only copying that to the nginx
+# container (without all the frontend src file).
+FROM node:12.21.0-alpine3.12 as build
+
+WORKDIR /twist/frontend/
+
+COPY ../frontend/package*.json .
+
+RUN npm install
+
+COPY ../frontend/ .
+
+RUN npm run build
+
 FROM nginx:stable-alpine3.17
+
+COPY --from=build /twist/frontend/build /usr/share/nginx/html
 
 RUN rm /etc/nginx/nginx.conf
 
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
-
-# Build react project and copy build folder to nginx
-WORKDIR /twist/frontend/
-
-COPY ../frontend .
-
-RUN apk add --update nodejs npm
-
-RUN npm install \
-    && npm run build \
-
-RUN chmod -R 755 ./build
-RUN mv build/* /usr/share/nginx/html
 
 EXPOSE 80

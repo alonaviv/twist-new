@@ -1,1 +1,37 @@
-    
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=twist_db
+      - POSTGRES_USER=twistdbadmin
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  twist:
+    build:
+      context: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/twist/backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_DEV=True
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+  react:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend:/twist/frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    command: npm start

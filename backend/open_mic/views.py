@@ -3,7 +3,7 @@ from datetime import datetime
 from .models import TestModel
 
 def get_time(request):
-    test_obj = TestModel(test_field="Test data")
+    test_obj = TestModel(test_field="Test data", another_field="More data")
     test_obj.save()
 
     retrieved_obj = TestModel.objects.get(pk=test_obj.pk)
@@ -14,7 +14,7 @@ def get_time(request):
     data = {
         'time': current_time,
         'date': current_date,
-        'obj': retrieved_obj.test_field
+        'obj': retrieved_obj.test_field + " " + retrieved_obj.another_field
     }
 
     return JsonResponse(data)

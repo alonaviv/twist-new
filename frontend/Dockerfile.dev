@@ -1,0 +1,7 @@
+FROM node:12.21.0-alpine3.12
+
+WORKDIR /twist/frontend/
+
+COPY package*.json .
+
+RUN npm install

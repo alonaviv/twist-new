@@ -19,8 +19,6 @@ services:
     build:
       context: ./backend
     command: /twist/backend/startup.sh
-    ports:
-      - "8000:8000"
     depends_on:
       - db
     working_dir: /twist/backend

@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from .views import serve_react
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/open_mic/', include('open_mic.urls')),
-    path('', serve_react),
 ]

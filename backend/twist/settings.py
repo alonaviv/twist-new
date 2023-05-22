@@ -28,7 +28,12 @@ FRONTEND_DIR = BASE_DIR.parent / 'frontend'
 import os
 
 DEBUG = os.environ.get('DJANGO_DEV', 'False') == 'True'
-ALLOWED_HOSTS = ['192.168.1.111', 'localhost', '127.0.0.1', '77.124.168.72']
+
+if DEBUG:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'twist']
+else:
+    # TODO: Only use broadwaywithatwist.xyz when done with testing the setup
+    ALLOWED_HOSTS = ['broadwaywithatwist.xyz', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -119,8 +124,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BACKEND_DIR / 'static'
-STATICFILES_DIRS = [FRONTEND_DIR / 'build']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
