@@ -33,7 +33,7 @@ if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'twist']
 else:
     # TODO: Only use broadwaywithatwist.xyz when done with testing the setup
-    ALLOWED_HOSTS = ['broadwaywithatwist.xyz', 'localhost', '127.0.0.1']
+    ALLOWED_HOSTS = ['broadwaywithatwist.xyz', 'localhost', '127.0.0.1', '46.101.235.18']
 
 # Application definition
 
