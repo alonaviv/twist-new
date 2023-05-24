@@ -15,6 +15,11 @@ services:
       - ./data/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   twist:
     restart: always
@@ -28,6 +33,11 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - gunicorn_sock_vol:/tmp
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   nginx:
     restart: always
@@ -40,3 +50,8 @@ services:
       - "80:80"
     depends_on:
       - twist
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
