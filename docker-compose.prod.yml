@@ -2,6 +2,7 @@ version: '3'
 
 volumes:
   gunicorn_sock_vol: {}
+  django_static_vol: {}
 
 services:
   db:
@@ -34,6 +35,7 @@ services:
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
     volumes:
       - gunicorn_sock_vol:/tmp
+      - django_static_vol:/twist/backend/django_static
     logging:
       driver: "json-file"
       options:
@@ -47,6 +49,7 @@ services:
         dockerfile: nginx/Dockerfile
     volumes:
       - gunicorn_sock_vol:/tmp
+      - django_static_vol:/usr/share/nginx/html/django_static
     ports:
       - "80:80"
     depends_on:
