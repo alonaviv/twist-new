@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,13 +19,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_w5%(x6n^c+i-%0da5#xl8)$7zm*o)%fw105*c0q2s&&=q0+@+'
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 BACKEND_DIR = BASE_DIR
 FRONTEND_DIR = BASE_DIR.parent / 'frontend'
-
-import os
 
 DEBUG = os.environ.get('DJANGO_DEV', 'False') == 'True'
 
@@ -34,6 +33,7 @@ if DEBUG:
 else:
     # TODO: Only use broadwaywithatwist.xyz when done with testing the setup
     ALLOWED_HOSTS = ['broadwaywithatwist.xyz', 'localhost', '127.0.0.1', '46.101.235.18']
+
 
 # Application definition
 
@@ -58,6 +58,37 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'twist.urls'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
+
 
 TEMPLATES = [
     {

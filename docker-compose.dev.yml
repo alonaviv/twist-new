@@ -23,6 +23,7 @@ services:
     environment:
       - DJANGO_DEV=True
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 
   react:
     build:

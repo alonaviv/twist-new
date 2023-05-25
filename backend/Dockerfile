@@ -19,6 +19,4 @@ RUN chmod +x startup.sh
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN python manage.py makemigrations
-
 EXPOSE 8000

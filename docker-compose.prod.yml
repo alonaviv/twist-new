@@ -31,6 +31,7 @@ services:
     working_dir: /twist/backend
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
     volumes:
       - gunicorn_sock_vol:/tmp
     logging:
