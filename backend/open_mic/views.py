@@ -3,6 +3,7 @@ from datetime import datetime
 from .models import TestModel
 
 def get_time(request):
+    raise KeyError
     test_obj = TestModel(test_field="Test data", another_field="More data")
     test_obj.save()
 
